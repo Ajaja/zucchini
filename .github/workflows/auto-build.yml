@@ -49,16 +49,21 @@ jobs:
           name: windows-zip
           path: windows/zucchini_windows-x64.zip
 
-      - name: Generate tag name
-        run: echo "TAG_NAME=$(date +%F-%H-%M)" >> $GITHUB_ENV  
+      - name: Generate date-based tag
+        id: generate_tag
+        shell: pwsh
+        run: |
+          $date = Get-Date -Format "yyyy-MM-dd"
+          $tag = "zucchini-$date"
+          echo "Generated tag: $tag"
+          echo "::set-output name=tag::$tag"
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: windows/zucchini_windows-x64.zip
           name: Zucchini Windows x64 build
-          tag_name: ${{ env.TAG_NAME }}
-          body_path: release.md
+          tag_name: ${{ steps.generate_tag.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
