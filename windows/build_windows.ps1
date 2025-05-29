@@ -100,9 +100,9 @@ gn gen out/Default
 
 Write-Output "::endgroup::"
 
-Write-Output "::group::Build subresource_filter_tools"
+Write-Output "::group::Build zucchini"
 
-autoninja -C out/Default subresource_filter_tools
+autoninja -C out/Default zucchini
 
 Write-Output "::endgroup::"
 
@@ -116,7 +116,7 @@ $GIT_COMMIT_SHORT = [string](git rev-parse --short HEAD).Trim()
 Write-Output "$GIT_COMMIT" > "chromium-version-$GIT_COMMIT_SHORT"
 
 # Create ZIP file in workflow directory
-Compress-Archive -Path ruleset_converter.exe, subresource_filter_tool.exe, subresource_indexing_tool.exe, "chromium-version-$GIT_COMMIT_SHORT" -DestinationPath "$WorkflowStartDir/subresource_filter_tools_windows-x64.zip"
+Compress-Archive -Path zucchini64.exe, "chromium-version-$GIT_COMMIT_SHORT" -DestinationPath "$WorkflowStartDir/zucchini_windows-x64.zip"
 
 Write-Output "::endgroup::"
 
