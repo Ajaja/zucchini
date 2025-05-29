@@ -1,11 +1,6 @@
 name: Build project
 
 on:
-  push:
-
-  schedule:
-  - cron: "37 2 24 * *" # run once a month
-  
   workflow_dispatch:
 
 jobs:
@@ -41,7 +36,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: linux-zip
-        path: linux/subresource_filter_tools_linux-x64.zip
+        path: linux/zucchini_linux-x64.zip
 
     - uses: actions/upload-artifact@v4
       with:
@@ -111,7 +106,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: windows-zip
-          path: windows/subresource_filter_tools_windows-x64.zip
+          path: windows/zucchini_windows-x64.zip
 
   release:
     name: Release
@@ -163,8 +158,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-              subresource_filter_tools_linux-x64.zip
-              subresource_filter_tools_windows-x64.zip
+              zucchini_linux-x64.zip
+              zucchini_windows-x64.zip
               SHA256SUMS
           tag_name: ${{ env.TAG_NAME }}
           name: "Automated build for Linux and Windows"
